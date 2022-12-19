@@ -53,14 +53,15 @@ def simulation(method, m=400, n=3000, r=10, rho=0.1, nrep=50, seed=1234,
             run_times[rep]['stoc_rpca'] = end - start
      
             #omwrpca 
-            start = timer()
-            Lhat, Shat, rank = omwrpca(M0, burnin, win_size, lam=1.0/np.sqrt(m), mu=np.sqrt(2*m)*0.1, burnin_method="PCP")
-            end = timer()
-            result[rep]['omwrpca'] = evaluate(Lhat, Shat, L0, S0, r, U0, burnin)
-            run_times[rep]['omwrpca'] = end - start
+            # start = timer()
+            # # Lhat, Shat, rank = omwrpca(M0, burnin, win_size, lam=1.0/np.sqrt(m), mu=np.sqrt(2*m)*0.1, burnin_method="PCP")
+            # Lhat, Shat, rank = omwrpca(M0, burnin, win_size, lambda1 = 1.0/np.sqrt(m), lambda2=np.sqrt(2*m)*0.1)
+            # end = timer()
+            # result[rep]['omwrpca'] = evaluate(Lhat, Shat, L0, S0, r, U0, burnin)
+            # run_times[rep]['omwrpca'] = end - start
 
             start = timer()
-            Lhat, Shat, rank = omwrpca(M0, burnin, win_size, lam=0.05, mu=0.05, burnin_method="PCP")
+            Lhat, Shat, rank = omwrpca(M0, burnin, win_size, lambda1=0.05, labmda2=0.05)
             end = timer()
             result[rep]['omwrpca'] = evaluate(Lhat, Shat, L0, S0, r, U0, burnin)
             run_times[rep]['omwrpca'] = end - start

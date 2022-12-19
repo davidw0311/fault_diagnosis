@@ -41,20 +41,23 @@ def simulation(method, m=400, n=3000, rvec=[10,50,25], rho=0.1, n_p=250, r0=5, n
         V0_burnin = np.random.randn(burnin, rvec[0])
         V0 = []
         for r in rvec:
-            V0.append(np.random.randn(n_piece, r))
+            V0.append(np.random.randn(int(n_piece), r))
         L0 = U0[0].dot(V0_burnin.transpose())
         K = int(math.ceil(float(n)/n_p))  
         Utilde = []
         for k in range(K):
-            i = k / (n_piece / n_p)
+            i = math.floor(k / (n_piece / n_p))
             Utemp = np.random.randn(m,rvec[i])
             Utemp[:,r0:] = 0
             Utilde.append(Utemp)
         for k in range(n):
-            i, index_i = k / n_piece, k % n_piece
-            l, index_l = k / n_p, k % n_p
+            i, index_i = math.floor(k / n_piece), math.floor(k % n_piece)
+            l, index_l = math.floor(k / n_p), int(k % n_p)
+
             U0_i, V0_i = U0[i], V0[i]
             U = U0_i + float(index_l + 1) / n_p * Utilde[l]
+            # breakpoint()
+            
             L0 = np.hstack((L0, U.dot(V0_i[index_i, :]).reshape(m,1)))
         S0 = (np.random.uniform(0, 1, size=(m,n + burnin)) < rho).astype(int) * np.random.uniform(-1000, 1000, size=(m,n + burnin))    
         M0 = L0+S0

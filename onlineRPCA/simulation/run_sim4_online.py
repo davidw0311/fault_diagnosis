@@ -5,7 +5,7 @@ Created on Thu May 05 16:21:40 2016
 @author: wexiao
 """
 from sim4 import simulation
-import cPickle as pickle
+import pickle
 
 # define parameters
 pms = {}
@@ -33,6 +33,8 @@ pms['factor'] = 1
 
 
 all_results = {}
+with open('result/all_results_sim4_online_v2.pickle', 'wb') as handle:
+    pickle.dump(all_results, handle)
 for i in range(len(pms['rvec'])):
 	for j in range(len(pms['rho'])):
 		all_results['r%d_rho%d' % (i+1, j+1)] = simulation(method=pms['method'], m=pms['m'], n=pms['n'], 

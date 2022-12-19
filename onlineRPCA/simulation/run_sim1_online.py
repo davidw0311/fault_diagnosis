@@ -11,8 +11,8 @@ import pickle
 pms = {}
 pms['method'] = 'online'
 
-pms['m'] = 400
-pms['n'] = 5000
+pms['m'] = 40
+pms['n'] = 500
 pms['r'] = [10, 50]
 pms['rho'] = [0.01, 0.1]
 pms['nrep'] = 50
@@ -41,5 +41,5 @@ for i in range(len(pms['r'])):
 
 all_results['pms'] = pms
 
-with open(r'result\all_results_sim1_online_v2.pickle', 'wb') as handle:
+with open(r'result/all_results_sim1_online_v2.pickle', 'wb') as handle:
     pickle.dump(all_results, handle)
