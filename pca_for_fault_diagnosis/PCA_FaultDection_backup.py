@@ -91,9 +91,9 @@ class PCA_FaultDection():
         # 报警值个数
         SPE_alarm = np.nonzero(SPE > self.model['SPE_limit'])
         T2_alarm = np.nonzero(T2 > self.model['T2_limit'])
-        print('total number of datapoints：%d\n' % testdata.shape[0])
-        print('num SPEs above threshold：%d\n' % len(SPE_alarm[0]))
-        print('num T2 above threshold：%d\n' % len(T2_alarm[0]))
+        print('测试样本总数：%d\n' % testdata.shape[0])
+        print('SPE统计量报警总数：%d\n' % len(SPE_alarm[0]))
+        print('T2统计量报警总数：%d\n' % len(T2_alarm[0]))
 
         result = {
             'SPE': SPE,
@@ -101,21 +101,6 @@ class PCA_FaultDection():
         }
 
         return result
-    
-    def predict(self, testdata):
-        lambdas = self.model['lambdas']
-        P=self.model['P']
-        H=np.identity(testdata.shape[1])-P@P.T
-        T2=[]
-        SPE=[]
-        for i in range(testdata.shape[0]):
-            t1 = testdata[i,:] @ P 
-            t2 = testdata[i,:] @ H 
-            T2.append(t1@np.linalg.inv( self.model['lambdas'])@t1.T)
-            SPE.append(t2@t2.T)
-            
-        return T2, SPE
-        
     
     def single_sample_con(self,x_test):#贡献图(reconstruction based contribution plot)
         m=   x_test.shape[1]
